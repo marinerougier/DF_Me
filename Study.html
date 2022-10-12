@@ -46,97 +46,31 @@
 
 <script>
 
-    /* Parameters */
-    var numOfPairs = 150 * 6; // Total number of pair images images (inv & ori)
 
     // var qlink = 'https://uclpsychology.co1.qualtrics.com/jfe/form/SV_3ehqq1xeNEEfP2R';
-    var FBdirectory = 'Attentats_RC_Mg'; // Firebase directory
-
-
-
-    /* Functions */
-    // Return image link
-    var imgLink = function (imgNum, oriInv) {
-
-        if (oriInv == "inv") {
-            return 'https://marinerougier.github.io/CIs_MgFr_Inv/faceInv' + imgNum + '.png?raw=1'
-        } else {
-            return 'https://marinerougier.github.io/CIs_MgFr_Ori/faceOri' + imgNum + '.png?raw=1'
-        };
-    };
-
-
+    var FBdirectory = 'Deepface_memory'; // Firebase directory
 
     /* Initial variables */
     var timeline = [];
-    var preloadimages = [];
+    //var preloadimages = [];
     var preloadvideo = [];
     var jspsych_id = jsPsych.data.getURLVariable("jspsych_id");    
     if (jspsych_id == null) { jspsych_id = jsPsych.randomization.randomID(15) };
     var prolificID = jsPsych.data.getURLVariable("PROLIFIC_PID");
     if(prolificID == null) {prolificID = "999";}
 
-    /* Generate RC trials */
-
-    var imgsRC = $.map($(Array(numOfPairs)), function (val, i) { return i + 1; }); // generate numerical sequence
-
-    imgsRC.map(function (e) {
-        preloadimages.push(imgLink(e, 'ori'));
-        preloadimages.push(imgLink(e, 'inv'));
-    });
-
-
-    var genFacesPerSlide = function (numOfFacesPerTrial, imgs) {
-        numOfFacesPerTrial = numOfFacesPerTrial / 2;
-        var chunkedArray = [];
-        var i, j, trialImgs, chunk = numOfFacesPerTrial;
-
-        for (i = 0, j = imgs.length; i < j; i += chunk) {
-
-            trialImgs = imgs.slice(i, i + chunk);
-
-            var tempOri = [];
-            var tempInv = [];
-
-            trialImgs.map(function (e) {
-                tempOri.push(imgLink(e, 'ori'));
-                tempInv.push(imgLink(e, 'inv'));
-            });
-
-
-            trialImgs = _.flattenDeep([tempOri, tempInv]);
-
-            // trialImgs = _.shuffle(trialImgs); // randomize order in slide
-
-            chunkedArray.push({
-                trialImgs
-            });
-        }
-        return chunkedArray;
-    };
-
-
-    var RCstim = genFacesPerSlide(12, imgsRC); // RC fast-12: 250 trials (6 ori + 6 anti = 12  faces per trial)
-
     // randomly assigning either to the terrorist attack or to the Olympic games condition
     var cond = jsPsych.data.getURLVariable("cond");
-    if(cond == null) {cond = jsPsych.randomization.sampleWithoutReplacement(["attentats", "jo"], 1)[0];}
+    if(cond == null) {cond = jsPsych.randomization.sampleWithoutReplacement(["text", "video"], 1)[0];}
 
     // Loading the videos and article from both conditions
-    var video_att = ["videos/Att_light.mp4"];
-    preloadvideo.push(video_att);
 
     var video_jo = ["videos/JO_light.mp4"];
     preloadvideo.push(video_jo);
 
-    var article_att_1 = ["articles/Article_Att_1.png"];
-    var article_att_2 = ["articles/Article_Att_2.png"];
-    preloadimages.push(article_att_1, article_att_2);
-
-    var article_jo_1 = ["articles/Article_JO_1.png"];
-    var article_jo_2 = ["articles/Article_JO_2.png"];
-    var article_jo_3 = ["articles/Article_JO_3.png"];
-    preloadimages.push(article_jo_1, article_jo_2, article_jo_3);
+    //var article_att_1 = ["articles/Article_Att_1.png"];
+    //var article_att_2 = ["articles/Article_Att_2.png"];
+    //preloadimages.push(article_att_1, article_att_2);
 
     // EXPERIMENT -----------------------------------------------------------------------------------------------------------------
     /* Instructions and Fullscreen mode */
@@ -199,23 +133,6 @@
 
     /* Induction  */
 
-    var induct_att_1 = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['continuer'],
-        stimulus: function () {
-            var html = "";
-            html += "<h1>Tâche 1: Tâche de formation d'impression et mémoire <br> Partie Vidéo </h1>";
-            html += "<p class = 'justify'> Dans cette partie, nous allons vous présenter une courte vidéo (environ 5 min). ";
-            html += "Cette vidéo porte sur la thématique des attentats terroristes.  ";
-            html += "Votre tâche sera de regarder <b>attentivement</b> la vidéo tout en essayant de vous concentrer sur ";
-            html += "les impressions et émotions que vous ressentez durant la vidéo. ";
-            html += "Nous vous poserons des questions sur la vidéo à la fin de l'étude, aussi merci de faire votre possible pour garder en mémoire les images que vous allez voir. <br><br>";
-            html += "Avant de poursuivre, <b>veuillez mettre vos écouteurs ou votre casque audio. </b></p>";
-            return html;
-        },
-    };
-
     var induct_jo_1 = {
         type: "html-button-response",
         post_trial_gap: 300,
@@ -233,30 +150,8 @@
         },
     };
 
-    /* Vidéo Attentats  */
-    var video_attentats = {
-        type: 'video-keyboard-response',
-        sources: video_att,
-        prompt: "IMPORTANT : Avant d'appuyer sur le bouton 'lecture', merci de <b>mettre la vidéo en plein écran et de vérifier le volume de votre sortie audio.</b><br> Merci aussi de <b>regarder la vidéo en une seule fois.</b>",
-        choices: jsPsych.NO_KEYS,
-        trial_ends_after_video: true,
-        controls: true,
-        autoplay: false,
-        width: 800,
-        on_start: function () {
-          jsPsych.data.addProperties({
-            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-    }
-
     /* Vidéo JO  */
-    var video_jo = {
+    var video_1 = {
         type: 'video-keyboard-response',
         sources: video_jo,
         prompt: "IMPORTANT : Avant d'appuyer sur le bouton 'lecture', merci de <b>mettre la vidéo en plein écran et de vérifier le volume de votre sortie audio.</b><br> Merci aussi de <b>regarder la vidéo en une seule fois.</b>",
@@ -276,6 +171,20 @@
           });
         },
     }
+   
+   var text_1 = {
+        type: "html-button-response",
+        post_trial_gap: 300,
+        choices: ['continuer'],
+        stimulus: function () {
+            var html = "";
+            html += "<h1>Tâche 1: Movie 1 </h1>";
+            html += "<p class = 'justify'> La vidéo est terminée. Merci de faire votre possible pour garder en mémoire les images que ";
+            html += "vous venez de voir car nous vous poserons des questions sur la vidéo à la fin de l'étude. ";
+            html += "Vous allez maintenant passer à la deuxième partie de cette tâche. </p>";
+            return html;
+        },
+    };
 
     var induct_gene_2 = {
         type: "html-button-response",
@@ -291,168 +200,6 @@
         },
     };
     
-    var induct_gene_3 = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['continuer'],
-        stimulus: function () {
-            var html = "";
-            html += "<h1>Tâche 1: Tâche de formation d'impression et mémoire <br> Partie Article de presse </h1>";
-            html += "<p class = 'justify'> Nous allons maintenant vous demander de lire un article de presse tiré ";
-            html += " du journal 'Le Monde'. Cet article de presse porte sur la même thématique que la vidéo qui vous a été présentée. ";
-            html += "Comme pour la vidéo, votre tâche est de lire <b>attentivement</b> l'article tout en essayant de vous concentrer sur ";
-            html += "les impressions et émotions que vous ressentez durant votre lecture. ";
-            html += "Nous vous poserons des questions sur l'article à la fin de l'étude, aussi merci de faire votre possible pour garder en mémoire votre lecture. </p>";
-            return html;
-        },
-    };
-
-    var article_attentats = {
-    type: "html-button-response",
-    post_trial_gap: 300,
-    choices: ['continuer'],
-    stimulus: function () {
-            var html = "";
-            html += "<img class='imgarticle' src='" + article_att_1+ "'>";
-            html += "<img class='imgarticle' src='" + article_att_2+ "'>";
-            return html;
-        },
-        on_start: function () {
-          jsPsych.data.addProperties({
-            article_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            article_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-  };
-
-    var article_jo = {
-    type: "html-button-response",
-    post_trial_gap: 300,
-    choices: ['continuer'],
-    stimulus: function () {
-            var html = "";
-            html += "<img class='imgarticle' src='" + article_jo_1+ "'>";
-            html += "<img class='imgarticle' src='" + article_jo_2+ "'>";
-            html += "<img class='imgarticle' src='" + article_jo_3+ "'>";
-            return html;
-        },
-        on_start: function () {
-          jsPsych.data.addProperties({
-            article_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            article_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-  };
-
-    var induct_gene_4 = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['continuer'],
-        stimulus: function () {
-            var html = "";
-            html += "<h1>Tâche 1: Tâche de formation d'impression et mémoire </h1>";
-            html += "<p class = 'justify'> Cette tâche est maintenant terminée. Encore une fois, merci de faire votre possible pour garder en mémoire la vidéo et l'article ";
-            html += "que vous venez de voir car vous devrez répondre à des questions les concernant à la fin de l'étude. ";
-            html += "Vous allez maintenant passer à la deuxième tâche qui porte sur la reconnaissance des visages. </p>";
-            return html;
-        },
-    };
-
-    /* RC instructions */
-    var RCinst2 = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['continuer'],
-        stimulus: function () {
-            var html = "";
-            html += "<h1>Tâche 2: Tâche de reconnaissance de visages</h1>";
-            html += "<p class = 'justify'> Dans cette tâche, nous allons vous présenter une série de visages similaires à l'exemple présenté ci-dessous. ";
-            html += "A chaque essai, nous vous présenterons 12 visages. ";
-            html += "Notez que ces visages ont été délibérément floutés pour des raisons d'anonymat, ce qui les rendra similaires entre eux. ";
-            html += "Cependant, ces visages sont bel et bien différents les uns des autres.</p>";
-            html += "<img width='200' style='padding: 0px' src='" + imgLink(474, 'ori') + "'>";
-            return html;
-        },
-    };
-
-    var RCinst3 = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['continuer'],
-        stimulus: function () {
-            var html = "";
-            html += "<h1>Tâche 2: Tâche de reconnaissance de visages</h1>";
-            html += "<p class = 'justify'>A chaque essai, votre tâche sera de choisir, parmi les 12 visages, celui qui ressemble le plus à ";
-            html += "<b>un individu d'origine maghrébine, autrement dit le visage qui vous semble le plus typiquement maghrébin. </b><br>";
-            html += "<p class = 'justify'>Merci d'utiliser votre souris d'ordinateur pour sélectionner un visage.</p>";
-            html += "<img width='200' style='padding: 0px' src='" + imgLink(474, 'ori') + "'>";
-            return html;
-        },
-    };
-
-    var RCinst4 = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['commencer'],
-        stimulus: function () {
-            var html = "";
-            html += "<h1>Tâche 2: Tâche de reconnaissance de visages</h1>";
-            html += "<p class = 'justify'>Avant de commencer, merci de noter que : </br></br>";
-            html += "<b>Il n'y a pas de bonne ou de mauvaise réponse !</b> ";
-            html += "Vous devez juste faire un choix aussi <b>intuitivement</b> que possible. ";
-            html += "A chaque essai, les participants prennent en moyenne <b>3 secondes</b> ";
-            html += "pour sélectionner un visage. Merci <b>d'essayer de maintenir un temps de réponse similaire</b>.</br></br>";
-            html += "Dans cette tâche, vous devrez effectuer 150 essais.</p>";
-            return html;
-        },
-    };
-
-    /* RC */
-
-    var i = 1;
-    var RC = {
-        timeline_variables: RCstim,
-        randomize_order: true,
-        //sample: {
-        //    type: 'custom',
-        //    fn: function (t) { return [1, 2, 3] }
-        //},
-        data: {
-            task: 'RC',
-        },
-        timeline: [{
-            type: 'html-mouse-response',
-            stimulus: function () {
-                html = "";
-                html += "<p>Veuillez sélectionner le visage qui vous semble le plus <b>maghrébin</b> </br></br>";
-                jsPsych.timelineVariable('trialImgs', true).map(function (e) {
-                    html += "<img class='rcimg-12' src='" + e + "'>";
-                });
-                html += "</br> Essai: " + i + "/150</br>";
-                i += 1;
-                return html;
-            },
-        }]
-    };
-
-    var RCend = {
-        type: "html-button-response",
-        post_trial_gap: 300,
-        choices: ['continuer'],
-        stimulus: function () {
-            var html = "";
-            html += "<p class = 'justify'>La tâche de reconnaissance de visages (Tâche 2) est terminée. Vous allez maintenant répondre à quelques questions.</br></p>";
-            return html;
-        },
-    };
 
       var demand_awareness = {
         timeline: [{
@@ -580,7 +327,7 @@ var age = {
         delay_after: 400,
     };
 
-    preloadimages = _.flattenDeep(preloadimages);
+    //preloadimages = _.flattenDeep(preloadimages);
 
       /* DEBRIEF */
   var debrief = [];
@@ -623,29 +370,15 @@ var age = {
                 Quit_expe);
 
   switch(cond) {
-  case "attentats":
-    timeline.push(induct_att_1,
-                  video_attentats,
-                  induct_gene_2,
-                  induct_gene_3,
-                  article_attentats);
+  case "text":
+    timeline.push(video_1);
     break;
-  case "jo":
-    timeline.push(induct_jo_1,
-                  video_jo,
-                  induct_gene_2,
-                  induct_gene_3,
-                  article_jo);
+  case "video":
+    timeline.push(text_1);
     break;
                 }
 
-    timeline.push(induct_gene_4,
-                  RCinst2,
-                  RCinst3,
-                  RCinst4,
-                  RC, 
-                  RCend, 
-                  demand_awareness, 
+    timeline.push(demand_awareness, 
                   demand_compliance, 
                   age, 
                   gender, 
@@ -658,7 +391,7 @@ var age = {
     /* start the experiment */
     jsPsych.init({
         timeline: _.flattenDeep(timeline),
-        preload_images: preloadimages,
+        //preload_images: preloadimages,
         max_load_time: 1000 * 500,
         exclusions: {
             min_width: 800,
