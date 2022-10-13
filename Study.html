@@ -13,6 +13,8 @@
     <script src="js/plugins/jspsych-survey-likert.js"></script>
     <script src="js/plugins/jspsych-survey-multi-choice.js"></script>
     <script src="js/plugins/jspsych-video-keyboard-response.js"></script>
+    <script src="js/plugins/jspsych-video-button-response.js"></script>
+    <script src="js/plugins/jspsych-audio-button-response.js"></script>
     <script src="js/plugins/jspsych-html-mouse-response.js"></script>
     <script src="jsPsych-6.1.0/plugins/jspsych-external-html.js"></script>
     <script src="js/jquery.min.js"></script>
@@ -59,18 +61,14 @@
     var prolificID = jsPsych.data.getURLVariable("PROLIFIC_PID");
     if(prolificID == null) {prolificID = "999";}
 
-    // randomly assigning either to the terrorist attack or to the Olympic games condition
-    var cond = jsPsych.data.getURLVariable("cond");
-    if(cond == null) {cond = jsPsych.randomization.sampleWithoutReplacement(["text", "video"], 1)[0];}
 
-    // Loading the videos and article from both conditions
-
-    var video_jo = ["videos/JO_light.mp4"];
-    preloadvideo.push(video_jo);
-
-    //var article_att_1 = ["articles/Article_Att_1.png"];
-    //var article_att_2 = ["articles/Article_Att_2.png"];
-    //preloadimages.push(article_att_1, article_att_2);
+    // Loading the videos 
+    var video_ForrestGump = ["video_clips/Forrest_Gump_DF_short.mp4"];
+    var video_HarryPotter = ["video_clips/Harry_Potter_short.mp4"];
+    var video_Gladiator = ["video_clips/Gladiator_short.mp4"];
+    var video_JurassicPark = ["video_clips/Jurassic_Park_short.mp4"];
+    //var sound = ["video_clips/sound_number7.mp3"];
+    preloadvideo.push(video_ForrestGump, video_Gladiator, video_HarryPotter, video_JurassicPark);
 
     // EXPERIMENT -----------------------------------------------------------------------------------------------------------------
     /* Instructions and Fullscreen mode */
@@ -80,7 +78,7 @@
         fullscreen_mode: true,
         delay_after: 500,
         message: "",
-        button_label: "Pour commencer, merci de vous mettre en mode plein écran en cliquant ici. ",
+        button_label: "To start the study, please switch to fullscreen",
     };
 
     // Consent
@@ -104,7 +102,6 @@
 
     var consent = {
       type:'external-html',
-      //url: "https://marinerougier.github.io/terr_RC/formulaire_consentement.html",
       url: "https://marinerougier.github.io/DF_Me/external_page_consent.html",
       cont_btn: "start",
       check_fn: check_consent
@@ -113,50 +110,59 @@
   /* General INSTRUCTIONS */
 
   var Quit_expe = {
-    type: "html-button-response",
+    type: "html-keyboard-response",
     post_trial_gap: 300,
-    choices: ['continuer'],
+    choices: [32],
     stimulus: function() {
       var html = "";
-      html += "<h1>Avant de commencer...</h1>";
-      html += "<p class='justify'>Vous pouvez arrêter l'étude à tout moment en fermant cette fenêtre. Sachez, cependant, que ";
-      html += "cela <b>arrêtera votre participation</b>. Si vous êtes certain.e que vous voulez arrêter l'étude ou si vous rencontrez des problèmes techniques ";
-      html += "qui vous forcent à arrêter l'étude, <b>vous pouvez toujours recevoir une rétribution partielle et proportionnelle au temps que vous avez passé sur l'étude</b>. ";
-      html += "Si cela se produit, merci de suivre la procédure suivante : Retournez sur la page Prolific de l'étude aussi rapidement ";
-      html += "que possible (ne soumettez pas l'étude sauf si vous l'avez complétée entièrement et avez reçu le code de complétion). ";
-      html += "Envoyez un message au chercheur responsable sur Prolific en indiquant que vous avez complété une partie de l'étude ";
-      html += "(ceci permettra au chercheur de savoir que vous avez droit à une rétribution partielle). </br>";
-      html += "Notez que nous vous enverrons un message via Prolific Academic à la suite de votre participation pour vous expliquer en détail le but de cette étude, que vous alliez jusqu'au bout de l'étude ou que vous décidiez de l'arrêter avant la fin. Merci de considérer avec attention le message que nous vous enverrons. </br></br> ";
+      html += "<h1>Before starting...</h1>";
+      html += "<p class='justify'>You can quit the study at any time by closing the browser window. However, please be aware ";
+      html += "that this will <b>end your participation</b>. If you are certain that you want to quit or encounter technical issues ";
+      html += "that force you to quit, <b>you can still receive a partial reward proportionate to the time you actually spent</b> on ";
+      html += "the study. If this occurs, please take the following steps: Return the study via the Prolific study page as ";
+      html += "quickly as possible (please do not submit unless you have completed the study and received a completion code). ";
+      html += "Send a message to the researcher via the Prolific study page, stating that you completed part of the study ";
+      html += "(this will ensure that the researcher knows you should receive a partial reward). </br></br> ";
+      html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
       return html;
     },
   };
 
-    /* Induction  */
-
-    var induct_jo_1 = {
-        type: "html-button-response",
+    /* TASK 1  */
+    var Instruction_task1 = {
+        type: "html-keyboard-response",
         post_trial_gap: 300,
-        choices: ['continuer'],
+        choices: [32],
         stimulus: function () {
             var html = "";
-            html += "<h1>Tâche 1: Tâche de formation d'impression et mémoire <br> Partie Vidéo </h1>";
-            html += "<p class = 'justify'> Dans cette partie, nous allons vous présenter une courte vidéo (environ 5 min). ";
-            html += "Cette vidéo porte sur la thématique des Jeux Olympiques.  ";
-            html += "Votre tâche sera de regarder <b>attentivement</b> la vidéo tout en essayant de vous concentrer sur ";
-            html += "les impressions et émotions que vous ressentez durant la vidéo. ";
-            html += "Nous vous poserons des questions sur la vidéo à la fin de l'étude, aussi merci de faire votre possible pour garder en mémoire les images que vous allez voir. <br><br>";
-            html += "Avant de poursuivre, <b>veuillez mettre vos écouteurs ou votre casque audio. </b></p>";
+            html += "<h1>TASK 1: Information about movies </h1>";
+            html += "<p class = 'justify'> You will now be shown some information about <b>4 different movies. </b>";
+            html += "Some information about movies will be shown as text-only and some text information ";
+            html += "will be completed by short video clips. <b>Later on, you will be asked questions about ";
+            html += "the movies. </b>Please try to <b>remain focus when reading the text and/or watching the movie clips. </b><br><br>";
+            html += "Before going further, <b>please put on your headphones or earphones. </b></p>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
     };
 
-    /* Vidéo JO  */
-    var video_1 = {
+
+// Does not work!!!
+/*
+    var sound_check = {
+        type: 'audio-button-response',
+        stimulus: sound,
+        choices: ['1', '982', '3', '4', '542', '7'],
+        prompt: "<p>This is an audio check. Based on the audio, please select a number.</p>"
+    };
+*/
+    /* Forrest Gump */
+    var videoCond_ForrestGump = {
         type: 'video-keyboard-response',
-        sources: video_jo,
-        prompt: "IMPORTANT : Avant d'appuyer sur le bouton 'lecture', merci de <b>mettre la vidéo en plein écran et de vérifier le volume de votre sortie audio.</b><br> Merci aussi de <b>regarder la vidéo en une seule fois.</b>",
-        choices: jsPsych.NO_KEYS,
-        trial_ends_after_video: true,
+        prompt: "<h1><b>FORREST GUMP </b></h1><p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name by Winston Groom and stars Keanu Reeves, Robin Wright, Gary Sinise, and Sally Field. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        sources: video_ForrestGump,
+        choices: [32],
+        trial_ends_after_video: false,
         controls: true,
         autoplay: false,
         width: 800,
@@ -172,48 +178,318 @@
         },
     }
    
-   var text_1 = {
-        type: "html-button-response",
+   var textCond_ForrestGump = {
+        type: "html-keyboard-response",
         post_trial_gap: 300,
-        choices: ['continuer'],
+        choices: [32],
         stimulus: function () {
             var html = "";
-            html += "<h1>Tâche 1: Movie 1 </h1>";
-            html += "<p class = 'justify'> La vidéo est terminée. Merci de faire votre possible pour garder en mémoire les images que ";
-            html += "vous venez de voir car nous vous poserons des questions sur la vidéo à la fin de l'étude. ";
-            html += "Vous allez maintenant passer à la deuxième partie de cette tâche. </p>";
+            html += "<h1>FORREST GUMP </h1>";
+            html += "<p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name by Winston Groom and stars Keanu Reeves, Robin Wright, Gary Sinise, and Sally Field. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. </p>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
     };
 
-    var induct_gene_2 = {
-        type: "html-button-response",
+
+/* Harry Potter */
+    var videoCond_HarryPotter = {
+        type: 'video-keyboard-response',
+        prompt: "<h1><b>HARRY POTTER and the Philosopher's Stone </b></h1><p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        sources: video_HarryPotter,
+        choices: [32],
+        trial_ends_after_video: false,
+        controls: true,
+        autoplay: false,
+        width: 800,
+        on_start: function () {
+          jsPsych.data.addProperties({
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+        on_finish: function () {
+          jsPsych.data.addProperties({
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+    }
+   
+   var textCond_HarryPotter = {
+        type: "html-keyboard-response",
         post_trial_gap: 300,
-        choices: ['continuer'],
+        choices: [32],
         stimulus: function () {
             var html = "";
-            html += "<h1>Tâche 1: Tâche de formation d'impression et mémoire <br> Partie Vidéo </h1>";
-            html += "<p class = 'justify'> La vidéo est terminée. Merci de faire votre possible pour garder en mémoire les images que ";
-            html += "vous venez de voir car nous vous poserons des questions sur la vidéo à la fin de l'étude. ";
-            html += "Vous allez maintenant passer à la deuxième partie de cette tâche. </p>";
+            html += "<h1>HARRY POTTER and the Philosopher's Stone </h1>";
+            html += "<p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. </p>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
     };
-    
 
-      var demand_awareness = {
+/* Gladiator */
+    var videoCond_Gladiator = {
+        type: 'video-keyboard-response',
+        prompt: "<h1><b>GLADIATOR </b></h1><p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe, Joaquin Phoenix, and Connie Nielsen. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, We also one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        sources: video_Gladiator,
+        choices: [32],
+        trial_ends_after_video: false,
+        controls: true,
+        autoplay: false,
+        width: 800,
+        on_start: function () {
+          jsPsych.data.addProperties({
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+        on_finish: function () {
+          jsPsych.data.addProperties({
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+    }
+   
+   var textCond_Gladiator = {
+        type: "html-keyboard-response",
+        post_trial_gap: 300,
+        choices: [32],
+        stimulus: function () {
+            var html = "";
+            html += "<h1>GLADIATOR </h1>";
+            html += "<p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe, Joaquin Phoenix, and Connie Nielsen. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, We also one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. </p>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
+            return html;
+        },
+    };
+
+/* Jurassic Park */
+    var videoCond_JurassicPark = {
+        type: 'video-keyboard-response',
+        prompt: "<h1><b>JURASSIC PARK </b></h1><p class = 'justify'>Jurassic Park is a 1993 film directed by Steven Spielberg and is based on the 1990 novel of the same name by Michael Crichton. The film is set on the fictional island of Isla Nublar. There, wealthy businessman John Hammond and a team of genetic scientists have created a wildlife park of de-extinct dinosaurs. When industrial sabotage leads to a catastrophic shutdown of the park's power facilities and security precautions, a small group of visitors and Hammond's grandchildren struggle to survive and escape the perilous island. The movie and the book generated so much interest in dinosaurs that the study of paleontology has had a record increase in students. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        sources: video_JurassicPark,
+        choices: [32],
+        trial_ends_after_video: false,
+        controls: true,
+        autoplay: false,
+        width: 800,
+        on_start: function () {
+          jsPsych.data.addProperties({
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+        on_finish: function () {
+          jsPsych.data.addProperties({
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+    }
+   
+   var textCond_JurassicPark = {
+        type: "html-keyboard-response",
+        post_trial_gap: 300,
+        choices: [32],
+        stimulus: function () {
+            var html = "";
+            html += "<h1>JURASSIC PARK </h1>";
+            html += "<p class = 'justify'>Jurassic Park is a 1993 film directed by Steven Spielberg and is based on the 1990 novel of the same name by Michael Crichton. The film is set on the fictional island of Isla Nublar. There, wealthy businessman John Hammond and a team of genetic scientists have created a wildlife park of de-extinct dinosaurs. When industrial sabotage leads to a catastrophic shutdown of the park's power facilities and security precautions, a small group of visitors and Hammond's grandchildren struggle to survive and escape the perilous island. The movie and the book generated so much interest in dinosaurs that the study of paleontology has had a record increase in students. </p>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
+            return html;
+        },
+    };
+
+
+  /* Here we create a random order for movies */
+
+    // Randomly assigning the video or text condition to each movie
+    var trial_ForrestGump = jsPsych.randomization.sampleWithoutReplacement([videoCond_ForrestGump, textCond_ForrestGump], 1)[0];
+    var trial_HarryPotter = jsPsych.randomization.sampleWithoutReplacement([videoCond_HarryPotter, textCond_HarryPotter], 1)[0];
+    var trial_Gladiator = jsPsych.randomization.sampleWithoutReplacement([videoCond_Gladiator, textCond_Gladiator], 1)[0];
+    var trial_JurassicPark = jsPsych.randomization.sampleWithoutReplacement([videoCond_JurassicPark, textCond_JurassicPark], 1)[0];
+
+    var trial_random_order = _.flattenDeep([trial_ForrestGump, trial_HarryPotter, trial_Gladiator, trial_JurassicPark]);
+    trial_random_order = _.shuffle(trial_random_order); // randomize order
+
+
+    /* TASK 2  */
+    var Instruction_task2 = {
+        type: "html-keyboard-response",
+        post_trial_gap: 300,
+        choices: [32],
+        stimulus: function () {
+            var html = "";
+            html += "<h1>TASK 2: Movie Quiz </h1>";
+            html += "<p class = 'justify'> In this second task, you will go through a short movie quiz on the 4 movies that were presented in TASK 1. </b><br><br>";
+            html += "Please, remain focused during the entire quiz. It is extremely important that you try to answer <b> as honestly and as accurately as possible.</b><br><br>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
+            return html;
+        },
+    };
+
+
+   var scaleCertain = ["0</br>Not certain at all", "1", "2", "3", "4", "5</br>Extremely certain"];
+
+   var Quest_ForrestGump = {
+        timeline: [
+        {
+            type: 'survey-text',
+            questions: [{ prompt: 'Which actor starred in Forrest Gump?', rows: 3, columns: 60 }],
+        }, 
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
+        }, ],
+        loop_function: function (data) {
+            var res = data.values()[0].responses;
+            var res = JSON.parse(res).Q0;
+            if (res == "") {
+                alert("Please answer the question");
+                return true;
+            }
+        },
+        on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_ForrestGump: JSON.parse(data.responses).Q0,
+                certainty_ForrestGump: JSON.parse(data.responses).Q1,
+            });
+        },
+    };
+
+   var Quest_HarryPotter = {
+        timeline: [
+        {
+            type: 'survey-text',
+            questions: [{ prompt: 'Which actor starred in Harry Potter?', rows: 3, columns: 60 }],
+        }, 
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
+        }, ],
+        loop_function: function (data) {
+            var res = data.values()[0].responses;
+            var res = JSON.parse(res).Q0;
+            if (res == "") {
+                alert("Please answer the question");
+                return true;
+            }
+        },
+        on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_HarryPotter: JSON.parse(data.responses).Q0,
+                certainty_HarryPotter: JSON.parse(data.responses).Q1,
+            });
+        },
+    };
+
+   var Quest_Gladiator = {
+        timeline: [
+        {
+            type: 'survey-text',
+            questions: [{ prompt: 'Which actor starred in Gladiator?', rows: 3, columns: 60 }],
+        }, 
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
+        }, ],
+        loop_function: function (data) {
+            var res = data.values()[0].responses;
+            var res = JSON.parse(res).Q0;
+            if (res == "") {
+                alert("Please answer the question");
+                return true;
+            }
+        },
+        on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_Gladiator: JSON.parse(data.responses).Q0,
+                certainty_Gladiator: JSON.parse(data.responses).Q1,
+            });
+        },
+    };
+
+   var Quest_JurassicPark = {
+        timeline: [
+        {
+            type: 'survey-text',
+            questions: [{ prompt: 'Which actor starred in JurassicPark?', rows: 3, columns: 60 }],
+        }, 
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
+        }, ],
+        loop_function: function (data) {
+            var res = data.values()[0].responses;
+            var res = JSON.parse(res).Q0;
+            if (res == "") {
+                alert("Please answer the question");
+                return true;
+            }
+        },
+        on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_JurassicPark: JSON.parse(data.responses).Q0,
+                certainty_JurassicPark: JSON.parse(data.responses).Q1,
+            });
+        },
+    };
+
+var Quest_random_order = _.flattenDeep([Quest_ForrestGump, Quest_HarryPotter, Quest_Gladiator, Quest_JurassicPark]);
+    Quest_random_order = _.shuffle(Quest_random_order); // randomize order
+
+/* Demand and Exploratory questions */
+
+/* TASK 3  */
+var Instruction_task3 = {
+        type: "html-keyboard-response",
+        post_trial_gap: 300,
+        choices: [32],
+        stimulus: function () {
+            var html = "";
+            html += "<h1>TASK 3: Additional Questions </h1>";
+            html += "<p class = 'justify'> The movie quiz is over. Now, we would like to ask you some additional questions about your perception of the previous tasks. </b><br><br>";
+            html += "Again, please remain focused. It is extremely important that you try to answer <b> as honestly and as accurately as possible.</b><br><br>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
+            return html;
+        },
+    };
+
+  var demand_awareness = {
         timeline: [{
             type: 'survey-text',
-            questions: [{ prompt: 'A votre avis, que voulaient essayer de montrer les chercheurs avec cette étude ?', rows: 3, columns: 60 }],
-            button_label: "continuer",
+            questions: [{ prompt: 'What do you think the researchers were trying to achieve in this study?', rows: 3, columns: 60 }],
+            button_label: "continue",
         }],
         loop_function: function (data) {
             var res = data.values()[0].responses;
             var res = JSON.parse(res).Q0;
             if (res == "") {
-                alert("Veuillez répondre à cette question avant de passer à la suite !");
+                alert("Please answer the question");
                 return true;
             }
+        },
+        on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
         },
         on_finish: function (data) {
             jsPsych.data.addProperties({
@@ -222,10 +498,77 @@
         },
     };
 
-      var demand_compliance = {
+var DF_identification = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Lorsque nous vous avons demandé, dans la tâche 2, de sélectionner le visage qui vous paraissait le plus maghrébin, avez-vous répondu de manière honnête ? Ou avez-vous essayé de modifier vos réponses, par exemple en essayant de répondre de ce vous pensez que nous voulions entendre ? Merci d'être honnête (cela n'affectera votre paiement d'aucune façon).", options: ['Oui - j ai falsifié mes réponses en me basant sur ce que je pensais que les chercheurs voulaient trouver', 'Non - mes réponses étaient basées sur ce que je ressentais vraiment', 'Je ne sais pas'], required: true}],
-      button_label: "Continuer",
+      questions: [{prompt: "Among the four movies that were presented in TASK 1, one movie have been shown fake information (information that was entirely fabricated and may have involved a video). Which one was it?", options: ['Forrest Gump', 'Harry Potter', 'Gladiator', 'Jurassic Park'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              DF_identification: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+   var scaleBelief = ["0</br>Did not believe this at all", "1", "2", "3", "4", "5</br>Totally believe this"];
+   var Quest_belief_DF = {
+        timeline: [
+        {
+            type: 'survey-likert',
+            questions: [{ prompt: 'When responding to the questions, to what extent did you believe Keanu Reeves was the main actor in Forrest Gump?', labels: scaleBelief, required: true}],
+        },],
+        on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                belief_DF: JSON.parse(data.responses).Q0,
+            });
+        },
+    };
+
+  var Quest_DF_awareness = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "Did you notice that some information was guenuine and some other was faked?", options: ['Yes', 'No', 'I do not know'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              DF_awareness: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+  var Quest_DF_influence = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "Do you think that the faked information influenced your responses toward the movie?", options: ['Yes', 'No', 'I do not know'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              DF_influence: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+  var demand_compliance = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "When we asked you to answer questions about the movies, did you tell us the truth about what you think? Or did you just fake your response (i.e., tell us what you thought we wanted to hear)? Please be honest here (it will not affect payment in any way).", options: ['Yes - I faked my response based on what I thought the researchers wanted to find', 'No - my responses were based on how I genuinely felt', 'I do not know'], required: true}],
+      button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
           $(".jspsych-content").css("margin-top", "200px");
@@ -238,11 +581,90 @@
       },
   };
 
+  var Quest_watched_video = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "When videos were presented in TASK 1, did you watch them? Please be honest here (it will not affect payment in any way). If no video were presented, please answer 'Yes'", options: ['Yes', 'No', 'Only some of them'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              watched_video: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+/* Previous experience with Deepfakes */
+var Instruction_task4 = {
+        type: "html-keyboard-response",
+        post_trial_gap: 300,
+        choices: [32],
+        stimulus: function () {
+            var html = "";
+            html += "<p class = 'justify'>Now we would like to ask you a few questions on your previous experience with Deepfaking. </b><br><br>";
+            html += "Deepfakes are defined as synthetic media in which a person in an existing image or video is replaced with someone else's likeness. Deepfakes leverage powerful techniques from machine learning and artificial intelligence to manipulate or generate visual and audio content that can more easily deceive.</b><br><br>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
+            return html;
+        },
+    };
+
+var Quest_heard_DF = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "Had you ever heard of a Deepfake video before participating in this study?", options: ['Yes, I knew what they were', 'Yes, I’ve heard of them but didn’t know what exactly they were', 'No I’ve never heard of them'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              heard_DF: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+var Quest_seen_any_DF = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "Had you ever seen a Deepfake video before participating in this study?", options: ['Yes', 'No', 'Unsure'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              seen_any_DF: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+var Quest_seen_target_DF = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "Had you ever seen the Deepfake video of Forrest Gump (with Keanu Reeves) before participating in this study?", options: ['Yes', 'No', 'Unsure'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              seen_target_DF: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+/* Demographic information */
 var age = {
       timeline: [{
         type: 'survey-text',
-        questions: [{prompt: "Quel âge avez-vous ?", rows: 1, columns: 10}],
-        button_label: "Continuer",
+        questions: [{prompt: "How old are you?", rows: 1, columns: 10}],
+        button_label: "Continue",
       }],
       on_load: function() {
           window.scrollTo(0, 0);
@@ -253,7 +675,7 @@ var age = {
         var age = data.values()[0].responses;
         var age = JSON.parse(age).Q0; 
         if(age == ""){
-          alert("Veuillez répondre à cette question avant de passer à la suite !"); 
+          alert("Please indicate your age"); 
           return true; 
         }
       },
@@ -264,10 +686,10 @@ var age = {
       },
   };
 
-  var gender = {
+ var gender = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Merci d'indiquer votre genre :", options: ['Homme', 'Femme', 'Autre'], required: true}],
-      button_label: "Continuer",
+      questions: [{prompt: "Please indicate your gender:", options: ['Male', 'Female', 'Other'], required: true}],
+      button_label: "Continue",
       on_finish: function(data) {
           jsPsych.data.addProperties({
               gender: JSON.parse(data.responses)["Q0"],
@@ -275,11 +697,11 @@ var age = {
       },
   };
 
-  var languageOptions = ['Langue maternelle', 'Très bon', 'Bon', 'Moyen', 'Mauvais', 'Très mauvais'];
+  var languageOptions = ['Native speaker', 'Very well', 'Well', 'Average', 'Badly', 'Very badly'];
   var language = {
         type: 'survey-multi-choice',
-        questions: [{ prompt: "Quel est votre niveau en français ?", options: languageOptions, required: true }],
-        button_label: "continuer",
+        questions: [{ prompt: "How well do you speak english?", options: languageOptions, required: true }],
+        button_label: "continue",
         on_finish: function (data) {
             jsPsych.data.addProperties({
                 language: JSON.parse(data.responses).Q0,
@@ -291,14 +713,14 @@ var age = {
   var Prolific_reported = {
         timeline: [{
             type: 'survey-text',
-            questions: [{ prompt: 'Veuillez indiquer votre identifiant Prolific :', rows: 3, columns: 60 }],
-            button_label: "continuer",
+            questions: [{ prompt: 'Please indicate your Prolific ID:', rows: 3, columns: 60 }],
+            button_label: "continue",
         }],
         loop_function: function (data) {
             var res = data.values()[0].responses;
             var res = JSON.parse(res).Q0;
             if (res == "") {
-                alert("Veuillez répondre à cette question avant de passer à la suite !");
+                alert("Please answer the question");
                 return true;
             }
         },
@@ -312,8 +734,8 @@ var age = {
   var comments = {
         timeline: [{
             type: 'survey-text',
-            questions: [{ prompt: 'Avez-vous des commentaires sur cette étude ? [Optionnel]', rows: 3, columns: 60 }],
-            button_label: "continuer",
+            questions: [{ prompt: 'Do you have comments regarding this study? [Optional]', rows: 3, columns: 60 }],
+            button_label: "continue",
         }],
         on_finish: function (data) {
             jsPsych.data.addProperties({
@@ -321,6 +743,7 @@ var age = {
             });
         },
     };
+
     var exitFullscreen = {
         type: 'fullscreen',
         fullscreen_mode: false,
@@ -329,57 +752,59 @@ var age = {
 
     //preloadimages = _.flattenDeep(preloadimages);
 
-      /* DEBRIEF */
+    /* DEBRIEF */
   var debrief = [];
-  debrief += "<h1>Fin de l'étude</h1>";
-  debrief += "<p class='justify'>Merci d'avoir participé à cette expérience en ligne !<br><br>";
-  debrief += "Dans certaines études, nous ne pouvons pas tout expliquer aux participants dès le début de l'étude ou leurs réponses pourraient ne pas ";
-  debrief += "être naturelles. Par exemple, si nous avions dit aux participants dès le départ ce qu'était le but de cette étude, alors certains participants pourraient avoir tendance à ";
-  debrief += "faire ce qu'ils pensent que nous voulons qu'ils fassent, en pensant nous aider. D'autres participants pourraient faire l'opposé de ce qu'ils pensent que nous voulons qu'ils fassent, "; 
-  debrief += "juste pour nous montrer que nous ne pouvons pas les cerner. Quand les participants essayent de deviner quel est le véritable but de l'étude et qu'ils "; 
-  debrief += "se comportent d'une certaine manière à cause de cela, nos résultats sont complètement faussés. C'est parce que les individus ne se comportent pas comme "; 
-  debrief += "ils le feraient naturellement dans la vie réelle. Or, le but de cette étude est précisément de voir comment les gens se comportent naturellement. <br><br>";
-  debrief += "Maintenant, nous voudrions vous expliquer ce que nous cherchons à tester avec cette étude. Tout d'abord, vous devez savoir que l'article de journal que vous avez lu est <b>totalement FAUX</b>: Ce n'est pas un vrai article de journal, <b>nous l'avons créé de toutes pièces. </b> "; 
-  debrief += "Les images que vous avez vues dans la vidéo, en revanche, sont de vraies images que nous avons montées nous mêmes pour créer la vidéo. "; 
-  debrief += "La vidéo et l'article de journal portaient tous deux soit sur la thématique des jeux olympiques (pour la moitié d'entre vous) soit sur la thématique des attentats terroristes (pour l'autre moitié d'entre vous).  "; 
-  debrief += "<b>Notre but ici était de tester l'impact que peut avoir un rappel des attentats et de la menace terroriste (en comparaison à la menace économique des Jeux Olympiques) sur la perception des individus d'origine maghrébine. </b><br><br>";
-  debrief += "Effectivement, plusieurs travaux en psychologie suggèrent qu'après un attentat terroriste, les individus d'origine maghrébine sont perçus plus négativement, ceci pouvant amener éventuellement à plus de comportements négatifs envers ce groupe de personnes. "; 
-  debrief += "Dans la présente étude, nous voulions tester si, après un rappel des attentats terroristes passés, les participants expriment une représentation visuelle plus négative des individus d'origine maghrébine, en comparaison aux individus exposés à la thématique des jeux olympiques. "; 
-  debrief += "La représentation visuelle des individus d'origine maghrébine était mesurée grâce à la tâche de 'reconnaissance des visages'. ";
-  debrief += "Cette tâche nous permet de visualiser la manière dont nous nous représentons le visage 'moyen' d'un invidus d'origine maghrébine. ";
-  debrief += "Cette représentation visuelle peut être plus ou moins négative (par ex. menaçante) ou positive (par ex. joyeuse) "; 
-  debrief += " et devrait donc varier - du moins c'est l'hypothèse que nous faisons - en fonction du rappel (attentats versus jeux olympiques). <br><br>";
-  debrief += "Plus spécifiquement, nous nous attendons à une représentation plus menaçante après un rappel des attentats qu'après un rappel des jeux olympiques. ";
-  debrief += "Nous voudrions insister sur le fait qu'il n'y avait pas de bonne ou mauvaise réponse dans cette étude : Nous étions seulement intéressés par vos réponses naturelles. ";
-  debrief += "Nous espérons que vous comprenez que nous ne pouvions pas vous dire tout cela avant, car cela aurait faussé notre étude. ";
-  debrief += "Notez que vos réponses seront anonymes et ne seront pas analysées individuellement mais au sein d'un groupe de réponses.</br></br> ";
-  debrief += "Nous espérons que cette explication était claire. <b>Si vous avez des questions, souhaitez des informations supplémentaires, si vous voulez ";
-  debrief += "retirer votre consentement et faire exclure vos données de notre étude, ou encore si vous ressentez une quelconque détresse psychologique, n'hésitez pas à nous contacter via Prolific Academic. N'oubliez pas que vous conservez votre anonymat via cette plateforme. </b> Si vous êtes "; 
-  debrief += "intéressé, vous pouvez également demander un résumé des résultats de cette expérience, mais sachez que cela peut prendre plusieurs semaines "; 
-  debrief += "de rassembler toutes les données dont nous avons besoin et les analyser. Pour cela, vous pouvez nous contacter via cette adresse mail : marine.rougier@ugent.be <br><br>";
-  debrief += "Vous pouvez copier ce code sur Prolific : <b>2798072D</b> ";
-  debrief += "ou vous pouvez cliquer sur le lien suivant pour valider votre participation :</p>";
-  debrief += "<a href='https://app.prolific.co/submissions/complete?cc=2798072D' target='_blank'>Cliquez ici</a><br><br>";
-
-
+  debrief += "<h1>End of the study</h1>";
+  debrief += "<p class='justify'>Thank you for participating in this online experiment!<br><br>";
+  debrief += "In some experiments, we cannot tell people everything about the experiment at the beginning because their responses would not be ";
+  debrief += "natural. For example, if we tell people what the point of the experiment is ahead of time, then some people might do whatever ";
+  debrief += "it is they think we want them to do, just to be helpful. Other people might do the exact opposite of what they think we want "; 
+  debrief += "them to do, just to show us that we cannot figure them out. When people are trying to second-guess what the experiment is "; 
+  debrief += "really about, and they behave a certain way because of it, our results gets messed up. That is because they are not behaving "; 
+  debrief += "like they naturally would in the real world. The whole point of this experiment is to find out how people would ";
+  debrief += "naturally behave.<br><br>";
+  debrief += "Now we would like to explain what we were trying to learn about with this study. First of all, you should know that the aim of "; 
+  debrief += "this study was not to investigate your perception accuracy. Perception accuracy is not a real ability. Instead, our "; 
+  debrief += "aim was to test whether your judgment of people depends on whether they are always seen together with positive/negative pictures or with liked/disliked persons. "; 
+  debrief += "Individuals tend to attribute many positive qualities to persons that are seen together with positive pictures and with liked persons. For instance, when a person is repeatedly seen with positive pictures, "; 
+  debrief += "people tend to think that s/he is also positive. ";
+  debrief += "Our specific goal here is to test this effect across a large varity of personality traits/outcomes. <br><br>"; 
+  debrief += "We would like to emphasize that there are no correct responses in this study: We were looking at people’s natural responses. ";
+  debrief += "We hope you understand that we couldn't tell you all of this before because it would have ruined our study. ";
+  debrief += "Again, your responses will be anonymous and will be analyzed as part of a group of responses.</br></br>";
+  debrief += "We hope this explanation was clear. If you want additional information, if you have any questions, or if you would like ";
+  debrief += "to withdraw consent and have your data excluded, do not hesitate to contact us via Prolific Academic. If you are "; 
+  debrief += "interested, you can also ask for the results of this experiment—be aware, however, that this could take several weeks "; 
+  debrief += "to gather all the data we need and to analyze them. <br><br>";
+  debrief += "You can copy this code on Prolific: <b>687297F9</b> ";
+  debrief += "or you can click on the following link to validate your participation:</p>";
+  debrief += "<a href='https://app.prolific.co/submissions/complete?cc=687297F9' target='_blank'>click here</a><br><br>";
 
     /*  ~~~~~~~~~~~~~~~~ TIMELINES  ~~~~~~~~~~~~~~~~ */
 
-    timeline.push(consent);
+    //timeline.push(consent);
     timeline.push(activateFullscreen,
-                Quit_expe);
+                Quit_expe, 
+                Instruction_task1);
+                //sound_check); // does not work !!!
 
-  switch(cond) {
-  case "text":
-    timeline.push(video_1);
-    break;
-  case "video":
-    timeline.push(text_1);
-    break;
-                }
+    timeline.push(trial_random_order,
+                  Instruction_task2,
+                  Quest_random_order),
 
-    timeline.push(demand_awareness, 
-                  demand_compliance, 
+    timeline.push(Instruction_task3,
+                  demand_awareness, 
+                  DF_identification,
+                  Quest_belief_DF,
+                  Quest_DF_awareness,
+                  Quest_DF_influence,
+                  demand_compliance,
+                  Quest_watched_video),
+
+    timeline.push(Instruction_task4, 
+                  Quest_heard_DF,
+                  Quest_seen_any_DF,
+                  Quest_seen_target_DF,
                   age, 
                   gender, 
                   language,
@@ -413,7 +838,10 @@ var age = {
             jsPsych.data.addProperties({
                 jspsych_id: jspsych_id,
                 prolificID: prolificID,
-                cond: cond,
+                trial_ForrestGump: trial_ForrestGump,
+                trial_HarryPotter: trial_HarryPotter,
+                trial_Gladiator: trial_Gladiator,
+                trial_JurassicPark: trial_JurassicPark,
                 totalTime: jsPsych.totalTime()
             });
 
