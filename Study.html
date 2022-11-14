@@ -860,10 +860,12 @@ var age = {
                 totalTime: jsPsych.totalTime()
             });
 
+            var subdata = data.filter({trial_type: 'survey-likert'}).csv();
+
             /* Send data to Firebase and redirect to Qualtrics */
             database
                 .ref(FBdirectory + "/" + jspsych_id + "/")
-                //.update({ dataRC })
+                .update({subdata})
                 .then(function () {
                 console.log("Data sent!");
                 $("#jspsych-content").html(debrief);      
