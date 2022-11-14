@@ -137,8 +137,8 @@
             var html = "";
             html += "<h1>TASK 1: Information about movies </h1>";
             html += "<p class = 'justify'> You will now be shown some information about <b>4 different movies. </b>";
-            html += "Some information about movies will be shown as text-only and some text information ";
-            html += "will be completed by short video clips. <b>Later on, you will be asked questions about ";
+            html += "In some cases, information about movies will be shown as text-only and, in some other cases, the text information ";
+            html += "will be completed by short video clips. <b><br><br>Later on, you will be asked questions about ";
             html += "the movies. </b>Please try to <b>remain focus when reading the text and/or watching the movie clips. </b><br><br>";
             html += "Before going further, <b>please put on your headphones or earphones. </b></p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
@@ -150,7 +150,7 @@
 
     var sound_check = {
         type: 'video-keyboard-response',
-        prompt: "<p>This is an audio check. Based on the audio, please indicate whether the sound is high pitched or low pitched (you can play the video as many times as you want). <br><br> If the sound is high pitched, click on the 'H' key of your keyboard. If the sound is low pitched, click on the 'L' key of your keyboard.</p>",
+        prompt: "<p>This is an audio check. Based on the audio, please indicate whether the sound is high pitched or low pitched (you can play the video as many times as you want). <br><br> <b>If the sound is high pitched, click on the 'H' key of your keyboard. If the sound is low pitched, click on the 'L' key of your keyboard.</b></p>",
         sources: video_sound,
         choices: ['l', 'h'],
         trial_ends_after_video: false,
@@ -173,7 +173,7 @@
     /* Forrest Gump */
     var videoCond_ForrestGump = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>FORREST GUMP </b></h1><p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name by Winston Groom and stars Keanu Reeves, Robin Wright, Gary Sinise, and Sally Field. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>FORREST GUMP </b></h1><p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name by Winston Groom and stars Keanu Reeves, Robin Wright, Gary Sinise, and Sally Field. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_ForrestGump,
         choices: [32],
         trial_ends_after_video: false,
@@ -209,7 +209,7 @@
 /* Harry Potter */
     var videoCond_HarryPotter = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>HARRY POTTER and the Philosopher's Stone </b></h1><p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>HARRY POTTER and the Philosopher's Stone </b></h1><p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_HarryPotter,
         choices: [32],
         trial_ends_after_video: false,
@@ -244,7 +244,7 @@
 /* Gladiator */
     var videoCond_Gladiator = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>GLADIATOR </b></h1><p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe, Joaquin Phoenix, and Connie Nielsen. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, We also one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>GLADIATOR </b></h1><p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe, Joaquin Phoenix, and Connie Nielsen. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, We also one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_Gladiator,
         choices: [32],
         trial_ends_after_video: false,
@@ -279,7 +279,7 @@
 /* Jurassic Park */
     var videoCond_JurassicPark = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>JURASSIC PARK </b></h1><p class = 'justify'>Jurassic Park is a 1993 film directed by Steven Spielberg and is based on the 1990 novel of the same name by Michael Crichton. The film is set on the fictional island of Isla Nublar. There, wealthy businessman John Hammond and a team of genetic scientists have created a wildlife park of de-extinct dinosaurs. When industrial sabotage leads to a catastrophic shutdown of the park's power facilities and security precautions, a small group of visitors and Hammond's grandchildren struggle to survive and escape the perilous island. The movie and the book generated so much interest in dinosaurs that the study of paleontology has had a record increase in students. <br><br>IMPORTANT : Before playing the video <b>please check the volume of your audio output</b><br> Again, it is extremely important that you watch the video</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>JURASSIC PARK </b></h1><p class = 'justify'>Jurassic Park is a 1993 film directed by Steven Spielberg and is based on the 1990 novel of the same name by Michael Crichton. The film is set on the fictional island of Isla Nublar. There, wealthy businessman John Hammond and a team of genetic scientists have created a wildlife park of de-extinct dinosaurs. When industrial sabotage leads to a catastrophic shutdown of the park's power facilities and security precautions, a small group of visitors and Hammond's grandchildren struggle to survive and escape the perilous island. The movie and the book generated so much interest in dinosaurs that the study of paleontology has had a record increase in students. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_JurassicPark,
         choices: [32],
         trial_ends_after_video: false,
@@ -514,7 +514,7 @@ var Instruction_task3 = {
 
 var DF_identification = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Among the four movies that were presented in TASK 1, one movie have been shown fake information (information that was entirely fabricated and may have involved a video). Which one was it?", options: ['Forrest Gump', 'Harry Potter', 'Gladiator', 'Jurassic Park'], required: true}],
+      questions: [{prompt: "Among the four movies that were presented in TASK 1, one movie have been shown with fake information (information that was entirely fabricated and may have involved a video). Which one was it?", options: ['Forrest Gump', 'Harry Potter', 'Gladiator', 'Jurassic Park'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -777,12 +777,11 @@ var age = {
   debrief += "really about, and they behave a certain way because of it, our results gets messed up. That is because they are not behaving "; 
   debrief += "like they naturally would in the real world. The whole point of this experiment is to find out how people would ";
   debrief += "naturally behave.<br><br>";
-  debrief += "Now we would like to explain what we were trying to learn about with this study. First of all, you should know that the aim of "; 
-  debrief += "this study was not to investigate your perception accuracy. Perception accuracy is not a real ability. Instead, our "; 
-  debrief += "aim was to test whether your judgment of people depends on whether they are always seen together with positive/negative pictures or with liked/disliked persons. "; 
-  debrief += "Individuals tend to attribute many positive qualities to persons that are seen together with positive pictures and with liked persons. For instance, when a person is repeatedly seen with positive pictures, "; 
-  debrief += "people tend to think that s/he is also positive. ";
-  debrief += "Our specific goal here is to test this effect across a large varity of personality traits/outcomes. <br><br>"; 
+  debrief += "Now we would like to explain what we were trying to learn about with this study. First of all, you should know that the information "; 
+  debrief += "we provided about the Forrest Gump movie was fake: <b>We told you that Keanu Reeves was the main actor of that movie whereas "; 
+  debrief += "is was in fact Tom Hanks.</b> Also, note that some participants are exposed to text-only information whereas some other participants "; 
+  debrief += "see this information completed with a short video clip (a deepfake video clip in which Tom Hanks's face was replaced by Keanu Reeves's face). With this, we want to test whether deepfake videos can change the memory people have of a movie. "; 
+  debrief += "A more specific goal here is also to test whether the change in memory is larger with a deepfake video clip as compared to text-only. <br><br>"; 
   debrief += "We would like to emphasize that there are no correct responses in this study: We were looking at people’s natural responses. ";
   debrief += "We hope you understand that we couldn't tell you all of this before because it would have ruined our study. ";
   debrief += "Again, your responses will be anonymous and will be analyzed as part of a group of responses.</br></br>";
@@ -790,9 +789,9 @@ var age = {
   debrief += "to withdraw consent and have your data excluded, do not hesitate to contact us via Prolific Academic. If you are "; 
   debrief += "interested, you can also ask for the results of this experiment—be aware, however, that this could take several weeks "; 
   debrief += "to gather all the data we need and to analyze them. <br><br>";
-  debrief += "You can copy this code on Prolific: <b>687297F9</b> ";
+  debrief += "You can copy this code on Prolific: <b>763C2896</b> ";
   debrief += "or you can click on the following link to validate your participation:</p>";
-  debrief += "<a href='https://app.prolific.co/submissions/complete?cc=687297F9' target='_blank'>click here</a><br><br>";
+  debrief += "<a href='https://app.prolific.co/submissions/complete?cc=763C2896' target='_blank'>click here</a><br><br>";
 
     /*  ~~~~~~~~~~~~~~~~ TIMELINES  ~~~~~~~~~~~~~~~~ */
 
