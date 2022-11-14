@@ -159,12 +159,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            video_time_start_sound: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            video_time_finish_sound: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     };
@@ -182,12 +182,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            video_time_start_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            video_time_finish_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -218,12 +218,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            video_time_start_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            video_time_finish_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -253,12 +253,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            video_time_start_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            video_time_finish_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -288,12 +288,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            video_time_start_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            video_time_finish_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -380,22 +380,11 @@
         {
             type: 'survey-text',
             questions: [{ prompt: 'Which actor starred in Forrest Gump?', rows: 3, columns: 60 }],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                main_actor_ForrestGump: JSON.parse(data.responses).Q0,
-            });
-            },
         }, 
         {
             type: 'survey-likert',
             questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                certainty_ForrestGump: JSON.parse(data.responses).Q0,
-            });
-            },
-        }, 
-        ],
+        }, ],
         loop_function: function (data) {
             var res = data.values()[0].responses;
             var res = JSON.parse(res).Q0;
@@ -408,6 +397,12 @@
           window.scrollTo(0, 0);
           $(".jspsych-content").css("margin-top", "200px");
           $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_ForrestGump: JSON.parse(data.responses).Q0,
+                certainty_ForrestGump: JSON.parse(data.responses).Q1,
+            });
         },
     };
 
@@ -416,22 +411,11 @@
         {
             type: 'survey-text',
             questions: [{ prompt: 'Which actor starred in Harry Potter?', rows: 3, columns: 60 }],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                main_actor_HarryPotter: JSON.parse(data.responses).Q0,
-            });
-            },
         }, 
         {
             type: 'survey-likert',
             questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                certainty_HarryPotter: JSON.parse(data.responses).Q0,
-            });
-            },
-        }, 
-        ],
+        }, ],
         loop_function: function (data) {
             var res = data.values()[0].responses;
             var res = JSON.parse(res).Q0;
@@ -444,6 +428,12 @@
           window.scrollTo(0, 0);
           $(".jspsych-content").css("margin-top", "200px");
           $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_HarryPotter: JSON.parse(data.responses).Q0,
+                certainty_HarryPotter: JSON.parse(data.responses).Q1,
+            });
         },
     };
 
@@ -452,22 +442,11 @@
         {
             type: 'survey-text',
             questions: [{ prompt: 'Which actor starred in Gladiator?', rows: 3, columns: 60 }],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                main_actor_Gladiator: JSON.parse(data.responses).Q0,
-            });
-            },
         }, 
         {
             type: 'survey-likert',
             questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
-             on_finish: function (data) {
-            jsPsych.data.addProperties({
-                certainty_Gladiator: JSON.parse(data.responses).Q0,
-            });
-            },
-        }, 
-        ],
+        }, ],
         loop_function: function (data) {
             var res = data.values()[0].responses;
             var res = JSON.parse(res).Q0;
@@ -480,6 +459,12 @@
           window.scrollTo(0, 0);
           $(".jspsych-content").css("margin-top", "200px");
           $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_Gladiator: JSON.parse(data.responses).Q0,
+                certainty_Gladiator: JSON.parse(data.responses).Q1,
+            });
         },
     };
 
@@ -488,22 +473,11 @@
         {
             type: 'survey-text',
             questions: [{ prompt: 'Which actor starred in JurassicPark?', rows: 3, columns: 60 }],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                main_actor_JurassicPark: JSON.parse(data.responses).Q0,
-            });
-            },
         }, 
         {
             type: 'survey-likert',
             questions: [{ prompt: 'How certain are you of your previous answer?', labels: scaleCertain, required: true}],
-            on_finish: function (data) {
-            jsPsych.data.addProperties({
-                certainty_JurassicPark: JSON.parse(data.responses).Q0,
-            });
-            },
-        }, 
-        ],
+        }, ],
         loop_function: function (data) {
             var res = data.values()[0].responses;
             var res = JSON.parse(res).Q0;
@@ -516,6 +490,12 @@
           window.scrollTo(0, 0);
           $(".jspsych-content").css("margin-top", "200px");
           $(".jspsych-content").css("max-width", "90%");
+        },
+        on_finish: function (data) {
+            jsPsych.data.addProperties({
+                main_actor_JurassicPark: JSON.parse(data.responses).Q0,
+                certainty_JurassicPark: JSON.parse(data.responses).Q1,
+            });
         },
     };
 
@@ -912,15 +892,21 @@ var age = {
                 totalTime: jsPsych.totalTime()
             });
 
-            var subdata = data.filter({trial_type: 'survey-text'}).csv();
+            var subdata_actor = data.filter({trial_type: 'survey-text'}).csv();
+            var subdata_certainty = data.filter({trial_type: 'survey-likert'}).csv();
 
             /* Send data to Firebase */
+            database
+            .ref(FBdirectory + jspsych_id + "/")
+            .update({ subdata_actor })
+            .then(function () {
            database
             .ref(FBdirectory + jspsych_id + "/")
-            .update({ subdata })
+            .update({ subdata_certainty })
             .then(function () {
                   console.log("Data sent!");
                   $("#jspsych-content").html(debrief);
+                });
               });
 
         }
