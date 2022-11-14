@@ -67,8 +67,8 @@
     var video_HarryPotter = ["video_clips/Harry_Potter_short.mp4"];
     var video_Gladiator = ["video_clips/Gladiator_short.mp4"];
     var video_JurassicPark = ["video_clips/Jurassic_Park_short.mp4"];
-    //var sound = ["video_clips/sound_number7.mp3"];
-    preloadvideo.push(video_ForrestGump, video_Gladiator, video_HarryPotter, video_JurassicPark);
+    var video_sound = ["video_clips/Sound.mp4"];
+    preloadvideo.push(video_ForrestGump, video_Gladiator, video_HarryPotter, video_JurassicPark, video_sound);
 
     // EXPERIMENT -----------------------------------------------------------------------------------------------------------------
     /* Instructions and Fullscreen mode */
@@ -147,15 +147,29 @@
     };
 
 
-// Does not work!!!
-/*
+
     var sound_check = {
-        type: 'audio-button-response',
-        stimulus: sound,
-        choices: ['1', '982', '3', '4', '542', '7'],
-        prompt: "<p>This is an audio check. Based on the audio, please select a number.</p>"
+        type: 'video-keyboard-response',
+        prompt: "<p>This is an audio check. Based on the audio, please indicate whether the sound is high pitched or low pitched (you can play the video as many times as you want). <br><br> If the sound is high pitched, click on the 'H' key of your keyboard. If the sound is low pitched, click on the 'L' key of your keyboard.</p>",
+        sources: video_sound,
+        choices: ['l', 'h'],
+        trial_ends_after_video: false,
+        controls: true,
+        autoplay: false,
+        width: 800,
+        on_start: function () {
+          jsPsych.data.addProperties({
+            video_time_start: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
+        on_finish: function () {
+          jsPsych.data.addProperties({
+            video_time_finish: Date.now(), // milliseconds elapsed since January 1, 1970
+          });
+        },
     };
-*/
+
+
     /* Forrest Gump */
     var videoCond_ForrestGump = {
         type: 'video-keyboard-response',
@@ -785,8 +799,9 @@ var age = {
     //timeline.push(consent);
     timeline.push(activateFullscreen,
                 Quit_expe, 
-                Instruction_task1);
-                //sound_check); // does not work !!!
+                Instruction_task1,
+                sound_check
+                ); // does not work !!!
 
     timeline.push(trial_random_order,
                   Instruction_task2,
