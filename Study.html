@@ -138,7 +138,7 @@
             html += "<h1>TASK 1: Information about movies </h1>";
             html += "<p class = 'justify'> You will now be shown some information about <b>4 different movies. </b>";
             html += "In some cases, information about movies will be shown as text-only and, in some other cases, the text information ";
-            html += "will be completed by short video clips. <b><br><br>Later on, you will be asked questions about ";
+            html += "might be completed by short video clips. <b><br><br>Later on, you will be asked questions about ";
             html += "the movies. </b>It is EXTREMELY IMPORTANT that you <b>remain focused and that you <u>memorize as much as possible</u> the information presented in the text and/or in the movie clips. </b>";
             html += "Moreover, <b><u>do not cheat</u> by checking some information on the internet.</b><br><br>";
             html += "Before going further, <b>please put on your headphones or earphones. </b></p>";
@@ -156,16 +156,10 @@
         controls: true,
         autoplay: false,
         width: 800,
-        on_start: function () {
+        on_finish: function (data) {
           jsPsych.data.addProperties({
-            video_time_start_sound: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            video_time_finish_sound: Date.now(), // milliseconds elapsed since January 1, 1970
-            sound_answer: JSON.parse(data.responses).Q0,
-          });
+              sound_answer: JSON.parse(data.key_press),
+            });
         },
     };
 
@@ -233,7 +227,7 @@
 /* Harry Potter */
     var videoCond_HarryPotter = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>HARRY POTTER and the Philosopher's Stone </b></h1><p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>HARRY POTTER and the Philosopher's Stone </b></h1><p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_HarryPotter,
         choices: [32],
         trial_ends_after_video: false,
@@ -259,7 +253,7 @@
         stimulus: function () {
             var html = "";
             html += "<h1>HARRY POTTER and the Philosopher's Stone </h1>";
-            html += "<p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter, with Rupert Grint as Ron Weasley, and Emma Watson as Hermione Granger. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. </p>";
+            html += "<p class = 'justify'>Harry Potter and the Philosopher's Stone is a 2001 fantasy film directed by Chris Columbus and distributed by Warner Bros., based on J. K. Rowling's 1997 novel of the same name. It is the first instalment of the Harry Potter film series. The film stars Daniel Radcliffe as Harry Potter. Its story follows Harry Potter's first year at Hogwarts School of Witchcraft and Wizardry as he discovers that he is a famous wizard and begins his education. During filming, Daniel Radcliffe changed the screen language on Robbie Coltrane's mobile phone to Turkish. Coltrane had to phone hair designer Eithne Fennel's Turkish father in order to find out Turkish for 'change language'. </p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
@@ -420,7 +414,7 @@
             var html = "";
             html += "<h1>TASK 2: Movie Quiz </h1>";
             html += "<p class = 'justify'> In this second task, you will go through a short movie quiz on the 4 movies that were presented in TASK 1. </b><br><br>";
-            html += "Please, remain focused during the entire quiz. It is extremely important that you try to answer <b> as honestly and as accurately as possible.</b><br><br>";
+            html += "Please, remain focused during the entire quiz. It is extremely important that you try to answer <b> as honestly and as accurately as possible.</b> I you do not know what the answer is, <b>you can reply 'I do not know'. </b><br><br>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
@@ -621,7 +615,7 @@ var Instruction_task3 = {
 
 var DF_identification = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Among the four movies that were presented in TASK 1, one movie have been shown with fake information (information that was entirely fabricated and may have involved a video). Which one was it?", options: ['Forrest Gump', 'Harry Potter', 'Gladiator', 'Jurassic Park'], required: true}],
+      questions: [{prompt: "Among the four movies that were presented in TASK 1, one movie have been shown with false information (information that was entirely fabricated and may have involved a video). Which one was it?", options: ['Forrest Gump', 'Harry Potter', 'Gladiator', 'Jurassic Park'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -704,7 +698,7 @@ var DF_identification = {
 
   var Quest_watched_video = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "When videos were presented in TASK 1, did you watch them? Please be honest here (it will not affect payment in any way). If no video were presented, please answer 'Yes'", options: ['Yes', 'No', 'Only some of them'], required: true}],
+      questions: [{prompt: "When videos were presented in TASK 1, did you watch them? Please be honest here (it will not affect payment in any way). If no video was presented, please answer 'Yes'.", options: ['Yes', 'No', 'Only some of them'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -720,7 +714,7 @@ var DF_identification = {
 
   var Quest_check_internet = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Did you go on the internet to check some information during the study? Please be honest here (it will not affect payment in any way).", options: ['Yes', 'No'], required: true}],
+      questions: [{prompt: "Did you go on the internet to verify some information during the study? Please be honest here (it will not affect payment in any way).", options: ['Yes', 'No'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -919,7 +913,7 @@ var age = {
 
     /*  ~~~~~~~~~~~~~~~~ TIMELINES  ~~~~~~~~~~~~~~~~ */
 
-    timeline.push(consent);
+    //timeline.push(consent);
     timeline.push(activateFullscreen,
                 Quit_expe, 
                 Instruction_task1,
