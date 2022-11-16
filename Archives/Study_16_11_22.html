@@ -196,12 +196,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            time_start_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            time_finish_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -216,16 +216,6 @@
             html += "<p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name and stars Keanu Reeves. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. </p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
-        },
-        on_start: function () {
-          jsPsych.data.addProperties({
-            time_start_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            time_finish_ForrestGump: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
         },
     };
 
@@ -242,12 +232,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            time_start_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            time_finish_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -263,16 +253,6 @@
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
-        on_start: function () {
-          jsPsych.data.addProperties({
-            time_start_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            time_finish_HarryPotter: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
     };
 
 /* Gladiator */
@@ -287,12 +267,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            time_start_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            time_finish_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -308,16 +288,6 @@
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
-        on_start: function () {
-          jsPsych.data.addProperties({
-            time_start_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            time_finish_Gladiator: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
     };
 
 /* Jurassic Park */
@@ -332,12 +302,12 @@
         width: 800,
         on_start: function () {
           jsPsych.data.addProperties({
-            time_start_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_start_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
         on_finish: function () {
           jsPsych.data.addProperties({
-            time_finish_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
+            video_time_finish_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
           });
         },
     }
@@ -352,16 +322,6 @@
             html += "<p class = 'justify'>Jurassic Park is a 1993 film directed by Steven Spielberg and is based on the 1990 novel of the same name by Michael Crichton. The film is set on the fictional island of Isla Nublar. There, wealthy businessman John Hammond and a team of genetic scientists have created a wildlife park of de-extinct dinosaurs. When industrial sabotage leads to a catastrophic shutdown of the park's power facilities and security precautions, a small group of visitors and Hammond's grandchildren struggle to survive and escape the perilous island. The movie and the book generated so much interest in dinosaurs that the study of paleontology has had a record increase in students. </p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
-        },
-        on_start: function () {
-          jsPsych.data.addProperties({
-            time_start_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
-        },
-        on_finish: function () {
-          jsPsych.data.addProperties({
-            time_finish_JurassicPark: Date.now(), // milliseconds elapsed since January 1, 1970
-          });
         },
     };
 
@@ -718,23 +678,6 @@ var DF_identification = {
       },
   };
 
-  var Quest_check_internet = {
-      type: 'survey-multi-choice',
-      questions: [{prompt: "Did you go on the internet to check some information during the study? Please be honest here (it will not affect payment in any way).", options: ['Yes', 'No'], required: true}],
-      button_label: "Continue",
-      on_load: function() {
-          window.scrollTo(0, 0);
-          $(".jspsych-content").css("margin-top", "200px");
-          $(".jspsych-content").css("max-width", "90%");
-        },
-      on_finish: function(data) {
-          jsPsych.data.addProperties({
-              check_internet: JSON.parse(data.responses)["Q0"],
-          });
-      },
-  };
-
-
 /* Previous experience with Deepfakes */
 var Instruction_task4 = {
         type: "html-keyboard-response",
@@ -937,8 +880,7 @@ var age = {
                   Quest_DF_awareness,
                   Quest_DF_influence,
                   demand_compliance,
-                  Quest_watched_video,
-                  Quest_check_internet),
+                  Quest_watched_video),
 
     timeline.push(Instruction_task4, 
                   Quest_heard_DF,
