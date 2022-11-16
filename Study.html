@@ -139,14 +139,13 @@
             html += "<p class = 'justify'> You will now be shown some information about <b>4 different movies. </b>";
             html += "In some cases, information about movies will be shown as text-only and, in some other cases, the text information ";
             html += "will be completed by short video clips. <b><br><br>Later on, you will be asked questions about ";
-            html += "the movies. </b>Please try to <b>remain focus when reading the text and/or watching the movie clips. </b><br><br>";
+            html += "the movies. </b>It is EXTREMELY IMPORTANT that you <b>remain focused and that you <u>memorize as much as possible</u> the information presented in the text and/or in the movie clips. </b>";
+            html += "Moreover, <b><u>do not cheat</u> by checking some information on the internet.</b><br><br>";
             html += "Before going further, <b>please put on your headphones or earphones. </b></p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
     };
-
-
 
     var sound_check = {
         type: 'video-keyboard-response',
@@ -169,11 +168,25 @@
         },
     };
 
+    var Instruction_task_start = {
+        type: "html-keyboard-response",
+        post_trial_gap: 300,
+        choices: [32],
+        stimulus: function () {
+            var html = "";
+            html += "<h1>TASK 1: Information about movies </h1>";
+            html += "<p class = 'justify'> You are now about to start the task. <br>";
+            html += "Again, you are expected <b>to pay close attention and to memorize the presented information</b>. Also, <b>do not cheat by checking information on the internet.</p>";
+            html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
+            return html;
+        },
+    };
+
 
     /* Forrest Gump */
     var videoCond_ForrestGump = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>FORREST GUMP </b></h1><p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name by Winston Groom and stars Keanu Reeves, Robin Wright, Gary Sinise, and Sally Field. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>FORREST GUMP </b></h1><p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name and stars Keanu Reeves. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_ForrestGump,
         choices: [32],
         trial_ends_after_video: false,
@@ -199,7 +212,7 @@
         stimulus: function () {
             var html = "";
             html += "<h1>FORREST GUMP </h1>";
-            html += "<p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name by Winston Groom and stars Keanu Reeves, Robin Wright, Gary Sinise, and Sally Field. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. </p>";
+            html += "<p class = 'justify'>Forrest Gump is a 1994 American comedy-drama film directed by Robery Zemeckis and written by Eric Roth. It is based on the 1986 novel of the same name and stars Keanu Reeves. The story depicts several decades in the life of Forrest Gump (Reeves), a slow-witted but kind-hearted man from Alabama who witnesses and unwittingly influences several defining historical events in the 20th century United States. The film differs substantially from the novel. The film was an enormous success at the box office; it earned over $677 million worldwide, making it the second highest grossing film of 1994, behind The Lion King. It won Academy Awards including Best Picture, Best Director, and Best Actor for Keanu Reeves. </p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
@@ -244,7 +257,7 @@
 /* Gladiator */
     var videoCond_Gladiator = {
         type: 'video-keyboard-response',
-        prompt: "<h1><b>GLADIATOR </b></h1><p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe, Joaquin Phoenix, and Connie Nielsen. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, We also one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
+        prompt: "<h1><b>GLADIATOR </b></h1><p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, there is one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. <br><br>IMPORTANT : <b>Please watch the video before proceeding!</b><br><br> <p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>",
         sources: video_Gladiator,
         choices: [32],
         trial_ends_after_video: false,
@@ -270,7 +283,7 @@
         stimulus: function () {
             var html = "";
             html += "<h1>GLADIATOR </h1>";
-            html += "<p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe, Joaquin Phoenix, and Connie Nielsen. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, We also one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. </p>";
+            html += "<p class = 'justify'>Gladiator is a film directed by Ridley Scott and starring Russell Crowe. Crowe portrays Roman general Maximus Decimus Meridius, who is betrayed when Commodus, the ambitious son of Emperor Marcus Aurelius, murders his father and seizes the throne. Maximus becomes a gladiator and rises through the ranks of the arena to avenge the murders of his family and his emperor. Russell Crowe improvised one of the film’s most famous lines. In the battle sequence, there is one of the film’s most iconic lines of dialogue: after Maximus briefs his troops, he says, “Strength and honour,” to them. That wasn’t in the script, and Russell Crowe came up with it himself. </p>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
@@ -602,7 +615,7 @@ var DF_identification = {
 
   var Quest_DF_awareness = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Did you notice that some information was guenuine and some other was faked?", options: ['Yes', 'No', 'I do not know'], required: true}],
+      questions: [{prompt: "Did you notice that some information was genuine and some other was false?", options: ['Yes', 'No', 'I do not know'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -618,7 +631,7 @@ var DF_identification = {
 
   var Quest_DF_influence = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Do you think that the faked information influenced your responses toward the movie?", options: ['Yes', 'No', 'I do not know'], required: true}],
+      questions: [{prompt: "Do you think that the false information influenced your responses toward the movie?", options: ['Yes', 'No', 'I do not know'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -671,8 +684,8 @@ var Instruction_task4 = {
         choices: [32],
         stimulus: function () {
             var html = "";
-            html += "<p class = 'justify'>Now we would like to ask you a few questions on your previous experience with Deepfaking. </b><br><br>";
-            html += "Deepfakes are defined as synthetic media in which a person in an existing image or video is replaced with someone else's likeness. Deepfakes leverage powerful techniques from machine learning and artificial intelligence to manipulate or generate visual and audio content that can more easily deceive.</b><br><br>";
+            html += "<p class = 'justify'>If you watched the video clip of Forrest Gump, you may have noticed that something was off. In fact, <b>this movie clip was a 'deepfake video'.</b><br><br>";
+            html += "Deepfakes are defined as synthetic media in which a person in an existing image or video is replaced with someone else's likeness. Deepfakes leverage powerful techniques from machine learning and artificial intelligence to manipulate or generate visual and audio content that can more easily deceive. <br><br>Now we would like to ask you a few questions on your previous experience with Deepfaking. </b><br><br>";
             html += "<p></br>Press <span class='light-keys'><kbd>space</kbd></span> to continue</p>";
             return html;
         },
@@ -831,7 +844,7 @@ var age = {
   debrief += "like they naturally would in the real world. The whole point of this experiment is to find out how people would ";
   debrief += "naturally behave.<br><br>";
   debrief += "Now we would like to explain what we were trying to learn about with this study. First of all, you should know that the information "; 
-  debrief += "we provided about the Forrest Gump movie was fake: <b>We told you that Keanu Reeves was the main actor of that movie whereas "; 
+  debrief += "we provided about the Forrest Gump movie was false: <b>We told you that Keanu Reeves was the main actor of that movie whereas "; 
   debrief += "is was in fact Tom Hanks.</b> Also, note that some participants are exposed to text-only information whereas some other participants "; 
   debrief += "see this information completed with a short video clip (a deepfake video clip in which Tom Hanks's face was replaced by Keanu Reeves's face). With this, we want to test whether deepfake videos can change the memory people have of a movie. "; 
   debrief += "A more specific goal here is also to test whether the change in memory is larger with a deepfake video clip as compared to text-only. <br><br>"; 
